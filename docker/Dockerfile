@@ -28,8 +28,12 @@ FROM registry.access.redhat.com/ubi8/ubi-minimal
 RUN microdnf install python38 && microdnf clean all
 COPY --from=builder /root/.local /root/.local
 COPY --from=builder /root/.ansible /root/.ansible
-RUN chmod 777 -R /root/.local
-RUN chmod 777 -R /root/.ansible
+#RUN chmod 744 /root/.local/lib/python3.8/site-packages
+#RUN chmod 777 -R /root/.local
+#RUN chmod 777 -R /root/.ansible
+RUN chmod 744 /root/.local/lib/python3.8/site-packages \
+    && ln -s /root/.local /.local \
+    && ln -s /root/.ansible /.ansible
 COPY --from=fabric /go/src/github.com/hyperledger/fabric/.build/bin /opt/fabric/bin
 COPY --from=fabric /go/src/github.com/hyperledger/fabric/sampleconfig /opt/fabric/config
 ENV FABRIC_CFG_PATH=/opt/fabric/config
