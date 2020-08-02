@@ -32,6 +32,7 @@ COPY --from=builder /root/.ansible /root/.ansible
 #RUN chmod 777 -R /root/.local
 #RUN chmod 777 -R /root/.ansible
 RUN chmod -R 754 /root/.local/lib/python3.8/site-packages \
+    && chmod -R 754 /root/.ansible \
     && ln -s /root/.local /.local \
     && ln -s /root/.ansible /.ansible
 COPY --from=fabric /go/src/github.com/hyperledger/fabric/.build/bin /opt/fabric/bin
